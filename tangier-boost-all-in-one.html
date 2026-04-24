@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tangier Boost System – كبر مشروعك فطنجة</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════
+   GLOBAL VARIABLES & RESET
+══════════════════════════════════════════ */
+:root {
+  --orange: #FF6B00;
+  --orange-light: #FF8C2A;
+  --orange-glow: rgba(255,107,0,0.18);
+  --black: #0A0A0A;
+  --dark: #111111;
+  --card: #161616;
+  --card2: #1C1C1C;
+  --white: #FFFFFF;
+  --gray: #888888;
+  --gray-light: #CCCCCC;
+  --border: rgba(255,107,0,0.2);
+  --green: #25D366;
+  --yellow: #F59E0B;
+  --blue: #3B82F6;
+  --wa-dark: #111B21;
+  --wa-chat: #0B141A;
+  --wa-sent: #005C4B;
+  --wa-recv: #1F2C34;
+  --wa-input: #2A3942;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--black);
+  color: var(--white);
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+/* ══════════════════════════════════════════
+   PAGE SYSTEM — show/hide pages
+══════════════════════════════════════════ */
+.page { display: none; }
+.page.active { display: block; }
+#page-crm.active { display: flex; }
+
+/* ══════════════════════════════════════════
+   GLOBAL NAV BAR (shown on landing + chat)
+══════════════════════════════════════════ */
+.main-nav {
+  position: fixed; top: 0; width: 100%; z-index: 200;
+  background: rgba(10,10,10,0.92);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 5%;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 1.45rem; font-weight: 900;
+  color: var(--white); letter-spacing: -0.5px;
+  cursor: pointer;
+}
+.nav-logo span { color: var(--orange); }
+.nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
+.nav-links a, .nav-links button {
+  color: var(--gray-light); text-decoration: none;
+  font-size: 0.9rem; font-weight: 600;
+  transition: color .2s; background: none; border: none; cursor: pointer;
+  font-family: 'Cairo', sans-serif;
+}
+.nav-links a:hover, .nav-links button:hover { color: var(--orange); }
+.nav-cta {
+  background: var(--orange); color: var(--white);
+  border: none; padding: 9px 22px;
+  border-radius: 8px; font-family: 'Cairo', sans-serif;
+  font-size: 0.88rem; font-weight: 700;
+  cursor: pointer; text-decoration: none;
+  transition: background .2s, transform .15s;
+  white-space: nowrap;
+}
+.nav-cta:hover { background: var(--orange-light); transform: translateY(-1px); }
+
+/* ══════════════════════════════════════════
+   LANDING PAGE STYLES
+══════════════════════════════════════════ */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 120px 5% 80px;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,107,0,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,107,0,0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  animation: gridPan 20s linear infinite;
+}
+@keyframes gridPan { from{background-position:0 0} to{background-position:60px 60px} }
+.hero::after {
+  content: '';
+  position: absolute;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,107,0,0.15) 0%, transparent 70%);
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  pointer-events: none;
+  animation: pulse 4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: translate(-50%,-50%) scale(1); opacity:1; }
+  50% { transform: translate(-50%,-50%) scale(1.12); opacity:0.7; }
+}
+.hero-content { position: relative; z-index: 2; max-width: 820px; }
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,107,0,0.12);
+  border: 1px solid var(--border);
+  color: var(--orange);
+  padding: 6px 18px; border-radius: 100px;
+  font-size: 0.82rem; font-weight: 700;
+  margin-bottom: 26px;
+  animation: fadeDown .7s ease both;
+}
+@keyframes fadeDown { from{opacity:0;transform:translateY(-14px)} to{opacity:1;transform:translateY(0)} }
+.hero h1 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+  font-weight: 900; line-height: 1.18; margin-bottom: 20px;
+  animation: fadeUp .7s .1s ease both;
+}
+.hero h1 .highlight { color: var(--orange); position: relative; }
+.hero h1 .highlight::after {
+  content: '';
+  position: absolute; left: 0; bottom: -4px;
+  width: 100%; height: 3px;
+  background: var(--orange); border-radius: 2px;
+  animation: lineGrow .8s .6s ease both; transform-origin: right;
+}
+@keyframes lineGrow { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+.hero p {
+  font-size: clamp(1rem, 2.2vw, 1.25rem);
+  color: var(--gray-light); margin-bottom: 38px;
+  animation: fadeUp .7s .2s ease both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+.hero-btns {
+  display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+  animation: fadeUp .7s .35s ease both;
+}
+.btn-wa {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: #25D366; color: #fff;
+  padding: 14px 30px; border-radius: 12px;
+  font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 28px rgba(37,211,102,0.35);
+  transition: transform .2s, box-shadow .2s;
+}
+.btn-wa:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(37,211,102,0.45); }
+.btn-wa svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: transparent; border: 2px solid var(--orange);
+  color: var(--orange); padding: 13px 28px; border-radius: 12px;
+  font-family: 'Cairo', sans-serif; font-size: 1rem; font-weight: 700;
+  text-decoration: none; cursor: pointer;
+  transition: background .2s, color .2s, transform .2s;
+}
+.btn-outline:hover { background: var(--orange); color: #fff; transform: translateY(-3px); }
+.hero-stats {
+  display: flex; gap: 40px; justify-content: center; flex-wrap: wrap;
+  margin-top: 56px; animation: fadeUp .7s .5s ease both;
+}
+.hero-stat { text-align: center; }
+.hero-stat-number {
+  font-family: 'Tajawal', sans-serif;
+  font-size: 2rem; font-weight: 900; color: var(--orange); display: block;
+}
+.hero-stat-label { font-size: 0.82rem; color: var(--gray); margin-top: 2px; }
+
+/* Sections shared */
+section.landing-section { padding: 90px 5%; }
+.section-tag {
+  display: inline-block;
+  background: var(--orange-glow); border: 1px solid var(--border);
+  color: var(--orange); padding: 5px 16px; border-radius: 100px;
+  font-size: 0.8rem; font-weight: 700; margin-bottom: 14px;
+}
+.section-title {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(1.7rem, 3.5vw, 2.6rem); font-weight: 900; margin-bottom: 10px;
+}
+.section-title span { color: var(--orange); }
+.section-sub { color: var(--gray); font-size: 1rem; max-width: 540px; }
+.section-header { text-align: center; margin-bottom: 56px; }
+.section-header .section-sub { margin: 0 auto; }
+
+/* Services */
+.services-bg { background: var(--dark); }
+.services-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 24px; max-width: 1100px; margin: 0 auto;
+}
+.service-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+  padding: 36px 28px; position: relative; overflow: hidden;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.service-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--orange), var(--orange-light));
+  transform: scaleX(0); transform-origin: right; transition: transform .3s ease;
+}
+.service-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(255,107,0,0.15); border-color: var(--orange); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon {
+  width: 60px; height: 60px; background: var(--orange-glow); border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem; margin-bottom: 22px; border: 1px solid var(--border);
+}
+.service-card h3 { font-size: 1.18rem; font-weight: 800; margin-bottom: 10px; }
+.service-card p { color: var(--gray); font-size: 0.9rem; line-height: 1.7; }
+.service-features { list-style: none; margin-top: 18px; }
+.service-features li {
+  color: var(--gray-light); font-size: 0.85rem; padding: 5px 0;
+  display: flex; align-items: center; gap: 8px;
+}
+.service-features li::before { content: '✓'; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+
+/* Why us */
+.why-bg { background: var(--black); }
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px; max-width: 900px; margin: 0 auto;
+}
+.why-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 32px 24px; text-align: center; transition: transform .2s, box-shadow .2s;
+}
+.why-card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(255,107,0,0.12); }
+.why-icon { font-size: 2.4rem; margin-bottom: 16px; }
+.why-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+.why-card p { color: var(--gray); font-size: 0.85rem; line-height: 1.65; }
+
+/* Offer */
+.offer-bg {
+  background: linear-gradient(135deg, #0A0A0A 0%, #1a0d00 50%, #0A0A0A 100%);
+  position: relative; overflow: hidden;
+}
+.offer-bg::before {
+  content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(255,107,0,0.12) 0%, transparent 65%);
+  pointer-events: none;
+}
+.offer-inner { max-width: 700px; margin: 0 auto; text-align: center; position: relative; z-index: 2; }
+.offer-badge {
+  display: inline-block; background: var(--orange); color: #fff;
+  padding: 6px 18px; border-radius: 100px; font-size: 0.82rem; font-weight: 700;
+  margin-bottom: 22px; animation: blink 2s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.75} }
+.offer-inner h2 {
+  font-family: 'Tajawal', sans-serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 900; margin-bottom: 14px;
+}
+.offer-inner p { color: var(--gray-light); margin-bottom: 36px; font-size: 1rem; line-height: 1.7; }
+.offer-spots { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 28px; }
+.spot { width: 14px; height: 14px; border-radius: 50%; background: var(--orange); }
+.spot.taken { background: #333; }
+.offer-spots-label { color: var(--gray); font-size: 0.85rem; }
+
+/* Contact */
+.contact-bg { background: var(--dark); }
+.contact-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+.contact-info { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin-bottom: 36px; }
+.contact-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 22px 28px; display: flex; align-items: center; gap: 14px; transition: border-color .2s;
+}
+.contact-card:hover { border-color: var(--orange); }
+.contact-card-icon {
+  width: 46px; height: 46px; background: var(--orange-glow); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;
+}
+.contact-card-info small { display: block; color: var(--gray); font-size: 0.75rem; margin-bottom: 4px; }
+.contact-card-info span { font-size: 0.95rem; font-weight: 700; }
+
+/* Footer */
+.site-footer {
+  background: var(--dark); border-top: 1px solid var(--border);
+  text-align: center; padding: 28px 5%;
+  color: var(--gray); font-size: 0.85rem;
+}
+.site-footer span { color: var(--orange); font-weight: 700; }
+
+/* Float WA button */
+.float-wa {
+  position: fixed; bottom: 28px; left: 28px; z-index: 999;
+  width: 62px; height: 62px; border-radius: 50%;
+  background: #25D366; display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+  animation: floatPop .5s 1s ease both, floatBounce 3s 1.5s ease-in-out infinite;
+  text-decoration: none;
+}
+@keyframes floatPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+@keyframes floatBounce { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.float-wa svg { width: 30px; height: 30px; fill: #fff; }
+.float-wa-pulse {
+  position: absolute; inset: -4px; border-radius: 50%;
+  border: 2px solid rgba(37,211,102,0.5);
+  animation: ripple 1.8s ease-in-out infinite;
+}
+@keyframes ripple { 0%{opacity:1;transform:scale(1)} 100%{opacity:0;transform:scale(1.7)} }
+
+/* Inline nav chat trigger button */
+.nav-page-btn {
+  background: rgba(255,107,0,0.1); border: 1px solid var(--border);
+  color: var(--orange); padding: 7px 16px; border-radius: 8px;
+  font-family: 'Cairo', sans-serif; font-size: 0.82rem; font-weight: 700;
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.nav-page-btn:hover { background: var(--orange); color: #fff; }
+
+/* ══════════════════════════════════════════
+   CHAT PAGE STYLES
+══════════════════════════════════════════ */
+#page-chat {
+  min-height: 100vh; background: var(--black);
+  display: flex; align-items: center; justify-content: center;
+  padding: 100px 20px 40px;
+}
+.chat-container { max-width: 420px; width: 100%; }
+.chat-page-header { text-align:center; margin-bottom: 28px; }
+.chat-page-header h1 { font-size: 1.5rem; font-weight: 900; color: var(--white); margin-bottom: 6px; }
+.chat-page-header h1 span { color: var(--orange); }
+.chat-page-header p { color: var(--gray); font-size: 0.88rem; }
+.phone {
+  background: var(--wa-dark); border-radius: 28px; overflow: hidden;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.08);
+}
+.wa-header {
+  background: #1F2C34; padding: 14px 18px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+.wa-back { color: var(--green); font-size: 1.2rem; cursor:pointer; }
+.wa-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--orange), var(--orange-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; flex-shrink:0;
+}
+.wa-info { flex: 1; }
+.wa-name { font-size: 0.95rem; font-weight: 700; color: var(--white); }
+.wa-status { font-size: 0.72rem; color: var(--green); }
+.wa-icons { display:flex; gap:14px; color:#8696A0; font-size:1.1rem; }
+.wa-chat {
+  background: var(--wa-chat);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(37,211,102,0.02) 0%, transparent 40%),
+    radial-gradient(circle at 90% 80%, rgba(255,107,0,0.02) 0%, transparent 40%);
+  height: 440px; overflow-y: auto;
+  padding: 14px 14px 8px;
+  display: flex; flex-direction: column; gap: 6px;
+  scroll-behavior: smooth;
+}
+.wa-chat::-webkit-scrollbar { width: 4px; }
+.wa-chat::-webkit-scrollbar-track { background: transparent; }
+.wa-chat::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+.msg {
+  max-width: 80%; padding: 9px 13px 6px; border-radius: 10px;
+  font-size: 0.88rem; line-height: 1.5; position: relative;
+  animation: msgPop .2s ease;
+}
+@keyframes msgPop { from{opacity:0;transform:scale(0.9) translateY(6px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.msg-recv {
+  background: var(--wa-recv); border-radius: 0 10px 10px 10px;
+  align-self: flex-start; color: var(--white);
+}
+.msg-recv::before {
+  content: ''; position: absolute; top:0; right:-8px;
+  border: 8px solid transparent; border-top-color: var(--wa-recv); border-right: none;
+}
+.msg-sent {
+  background: var(--wa-sent); border-radius: 10px 0 10px 10px;
+  align-self: flex-end; color: var(--white);
+}
+.msg-sent::before {
+  content: ''; position: absolute; top:0; left:-8px;
+  border: 8px solid transparent; border-top-color: var(--wa-sent); border-left: none;
+}
+.msg-time {
+  font-size: 0.65rem; color: rgba(255,255,255,0.45);
+  text-align: left; margin-top: 3px;
+  display: flex; align-items: center; justify-content: flex-end; gap: 3px;
+}
+.msg-sent .msg-time::after { content: '✓✓'; color: #53BDEB; font-size: 0.7rem; }
+.date-divider {
+  text-align: center; font-size: 0.72rem; color: rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.05); padding: 4px 12px; border-radius: 100px;
+  align-self: center; margin: 6px 0;
+}
+.quick-replies {
+  display: flex; flex-wrap: wrap; gap: 7px; padding: 10px 14px;
+  background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.04);
+}
+.chip {
+  background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.25);
+  color: var(--green); padding: 6px 13px; border-radius: 100px;
+  font-size: 0.78rem; font-weight: 600; cursor: pointer; transition: all .15s;
+}
+.chip:hover { background: rgba(37,211,102,0.22); transform: scale(1.02); }
+.typing {
+  display: none; align-items: center; gap: 4px; padding: 10px 14px;
+  background: var(--wa-recv); border-radius: 10px; align-self: flex-start;
+  width: fit-content; margin-bottom: 4px;
+}
+.typing.show { display: flex; animation: msgPop .2s ease; }
+.dot {
+  width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.5);
+  animation: typingDot 1.2s ease-in-out infinite;
+}
+.dot:nth-child(2) { animation-delay: .2s; }
+.dot:nth-child(3) { animation-delay: .4s; }
+@keyframes typingDot { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-6px)} }
+.wa-input-area {
+  background: var(--wa-input); padding: 10px 14px; display: flex; align-items: center; gap: 10px;
+}
+.wa-input {
+  flex: 1; background: #2A3942; border: none; border-radius: 100px;
+  padding: 10px 16px; color: var(--white); font-family:'Cairo',sans-serif; font-size:0.88rem;
+  outline: none; direction: rtl;
+}
+.wa-input::placeholder { color: #8696A0; }
+.wa-send {
+  width: 44px; height: 44px; border-radius: 50%; background: var(--green); border: none;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  font-size: 1.1rem; transition: background .15s, transform .1s;
+}
+.wa-send:hover { background: #20c25e; transform: scale(1.05); }
+.reset-btn {
+  display: block; margin: 16px auto 0;
+  background: rgba(255,107,0,0.1); border: 1px solid var(--border); color: var(--orange);
+  padding: 9px 22px; border-radius: 100px; font-family: 'Cairo',sans-serif;
+  font-size:0.82rem; font-weight:700; cursor: pointer; transition: all .2s;
+}
+.reset-btn:hover { background: var(--orange); color:#fff; }
+
+/* ══════════════════════════════════════════
+   CRM PAGE STYLES
+══════════════════════════════════════════ */
+#page-crm {
+  min-height: 100vh; background: var(--black);
+}
+.crm-sidebar {
+  position: fixed; right: 0; top: 0; bottom: 0; width: 240px;
+  background: var(--dark); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; z-index: 50; transition: transform .3s;
+}
+.crm-sidebar-logo {
+  padding: 24px 22px; border-bottom: 1px solid var(--border);
+  font-family: 'Tajawal', sans-serif; font-size: 1.2rem; font-weight: 900;
+}
+.crm-sidebar-logo span { color: var(--orange); }
+.crm-sidebar-nav { padding: 16px 0; flex: 1; }
+.crm-nav-item {
+  display: flex; align-items: center; gap: 12px; padding: 12px 22px;
+  color: var(--gray-light); cursor: pointer; font-size: 0.9rem; font-weight: 600;
+  border-right: 3px solid transparent; transition: all .2s;
+}
+.crm-nav-item:hover, .crm-nav-item.active {
+  color: var(--white); background: var(--orange-glow); border-right-color: var(--orange);
+}
+.crm-nav-item .icon { font-size: 1.1rem; flex-shrink:0; }
+.crm-sidebar-footer { padding: 16px 22px; border-top: 1px solid var(--border); }
+.owner-info { display: flex; align-items: center; gap: 10px; }
+.owner-avatar {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--orange); display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 1rem;
+}
+.owner-name { font-size: 0.85rem; font-weight: 700; }
+.owner-role { font-size: 0.72rem; color: var(--gray); }
+.crm-main { margin-right: 240px; padding: 28px 32px; }
+.topbar {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px;
+}
+.page-title { font-family: 'Tajawal',sans-serif; font-size:1.5rem; font-weight:900; }
+.topbar-actions { display:flex; gap:10px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px; border-radius: 10px;
+  font-family: 'Cairo',sans-serif; font-size:0.88rem; font-weight:700;
+  cursor: pointer; border: none; transition: all .2s;
+}
+.btn-primary { background: var(--orange); color:#fff; }
+.btn-primary:hover { background: var(--orange-light); transform:translateY(-1px); }
+.btn-ghost { background: var(--card); color: var(--gray-light); border: 1px solid var(--border); }
+.btn-ghost:hover { color:#fff; border-color: var(--orange); }
+.btn-danger { background: rgba(239,68,68,0.12); color:#EF4444; border:1px solid rgba(239,68,68,0.3); }
+.btn-danger:hover { background:rgba(239,68,68,0.2); }
+.btn-sm { padding:7px 14px; font-size:0.8rem; }
+.stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px 22px; }
+.stat-card-label { color: var(--gray); font-size:0.78rem; font-weight:600; margin-bottom:8px; }
+.stat-card-value { font-family:'Tajawal',sans-serif; font-size:1.9rem; font-weight:900; }
+.stat-card-value.orange { color: var(--orange); }
+.stat-card-value.green { color: var(--green); }
+.stat-card-value.yellow { color: var(--yellow); }
+.stat-card-value.blue { color: var(--blue); }
+.table-wrap {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; margin-bottom: 28px;
+}
+.table-header {
+  padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.table-header h3 { font-size:1rem; font-weight:800; }
+.search-input {
+  background: var(--card2); border: 1px solid var(--border); color: var(--white);
+  border-radius: 8px; padding: 8px 14px; font-family:'Cairo',sans-serif; font-size:0.85rem;
+  outline: none; width: 200px; direction: rtl; transition: border-color .2s;
+}
+.search-input:focus { border-color: var(--orange); }
+.search-input::placeholder { color: var(--gray); }
+table { width: 100%; border-collapse: collapse; }
+thead { background: var(--card2); }
+th {
+  padding: 12px 20px; text-align: right; font-size: 0.78rem; font-weight: 700;
+  color: var(--gray); text-transform: uppercase; letter-spacing: 0.5px;
+}
+td {
+  padding: 14px 20px; font-size: 0.88rem;
+  border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(255,107,0,0.04); }
+.badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 100px; font-size: 0.76rem; font-weight: 700;
+}
+.badge-green { background:rgba(37,211,102,0.12); color:#25D366; }
+.badge-yellow { background:rgba(245,158,11,0.12); color:#F59E0B; }
+.badge-blue { background:rgba(59,130,246,0.12); color:#3B82F6; }
+.badge::before { content:'●'; font-size:0.6rem; }
+.action-btns { display:flex; gap:6px; }
+.modal-overlay {
+  display: none; position: fixed; inset:0; background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px); z-index: 300; align-items: center; justify-content: center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 32px; width: 90%; max-width: 520px; animation: modalIn .25s ease;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.95)} to{opacity:1;transform:scale(1)} }
+.modal-header {
+  display:flex; align-items:center; justify-content:space-between; margin-bottom: 24px;
+}
+.modal-title { font-family:'Tajawal',sans-serif; font-size:1.2rem; font-weight:900; }
+.modal-close {
+  width:32px; height:32px; border-radius:8px; background:var(--card2); border:1px solid var(--border);
+  color:var(--gray); cursor:pointer; font-size:1.1rem;
+  display:flex; align-items:center; justify-content:center; transition: color .2s;
+}
+.modal-close:hover { color:var(--white); }
+.form-group { margin-bottom: 18px; }
+.form-label { display:block; font-size:0.82rem; font-weight:700; color:var(--gray-light); margin-bottom:7px; }
+.form-input, .form-select, .form-textarea {
+  width:100%; background: var(--card2); border: 1px solid var(--border);
+  color: var(--white); border-radius: 10px; padding: 11px 14px;
+  font-family:'Cairo',sans-serif; font-size:0.9rem; outline:none; direction:rtl;
+  transition: border-color .2s;
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus { border-color: var(--orange); }
+.form-select { cursor:pointer; }
+.form-select option { background: var(--card); }
+.form-textarea { resize: vertical; min-height: 90px; }
+.modal-actions { display:flex; gap:10px; margin-top:24px; justify-content:flex-end; }
+#toast {
+  position: fixed; bottom: 28px; right: 28px;
+  background: var(--card); border: 1px solid var(--border); border-radius: 12px;
+  padding: 14px 20px; display:flex; align-items:center; gap:10px;
+  font-size:0.88rem; font-weight:600; box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+  transform: translateX(120%); transition: transform .3s ease; z-index: 999;
+}
+#toast.show { transform: translateX(0); }
+#toast .toast-icon { font-size:1.2rem; }
+.empty-state { text-align:center; padding:60px 20px; color:var(--gray); }
+.empty-state .empty-icon { font-size:3rem; margin-bottom:12px; }
+.empty-state p { font-size:0.9rem; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .crm-sidebar { transform:translateX(100%); }
+  .crm-sidebar.open { transform:translateX(0); }
+  .crm-main { margin-right:0; padding:20px; }
+  .stats-row { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .hero h1 { font-size: 2rem; }
+  .hero-stats { gap: 24px; }
+  .hero-stat-number { font-size: 1.6rem; }
+  section.landing-section { padding: 64px 5%; }
+  .contact-info { flex-direction: column; align-items: center; }
+  .contact-card { width: 100%; max-width: 340px; }
+}
+@media (max-width: 600px) {
+  .stats-row { grid-template-columns: 1fr 1fr; }
+  th:nth-child(4), td:nth-child(4) { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+  GLOBAL NAV (landing + chat pages)
+════════════════════════════════════ -->
+<nav class="main-nav" id="main-nav">
+  <div class="nav-logo" onclick="showPage('landing')">Tangier <span>Boost</span></div>
+  <ul class="nav-links">
+    <li><a href="#services" onclick="showPage('landing')">خدماتنا</a></li>
+    <li><a href="#why" onclick="showPage('landing')">لماذا نحن</a></li>
+    <li><a href="#offer" onclick="showPage('landing')">عروض</a></li>
+    <li><a href="#contact" onclick="showPage('landing')">التواصل</a></li>
+    <li><button class="nav-page-btn" onclick="showPage('chat')">💬 محاكاة واتساب</button></li>
+    <li><button class="nav-page-btn" onclick="showPage('crm')" style="border-color:rgba(59,130,246,0.3);color:#3B82F6;background:rgba(59,130,246,0.08)">📊 لوحة CRM</button></li>
+  </ul>
+  <a href="https://wa.me/212673445002" target="_blank" class="nav-cta">تواصل معنا 💬</a>
+</nav>
+
+<!-- ════════════════════════════════════
+  PAGE 1 — LANDING
+════════════════════════════════════ -->
+<div id="page-landing" class="page active">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <div class="hero-badge">🚀 الرقم 1 في التسويق الرقمي بطنجة</div>
+      <h1>كبر مشروعك فطنجة مع <span class="highlight">Tangier Boost</span></h1>
+      <p>كنعاونك تبني براند قوي وتزيد المبيعات — من الأساس حتى النجاح</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/212673445002" target="_blank" class="btn-wa">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          ابدأ معنا الآن
+        </a>
+        <a href="#services" class="btn-outline">شوف خدماتنا ↓</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="hero-stat-number">+50</span><div class="hero-stat-label">مشروع تم</div></div>
+        <div class="hero-stat"><span class="hero-stat-number">98%</span><div class="hero-stat-label">رضا الزبناء</div></div>
+        <div class="hero-stat"><span class="hero-stat-number">3X</span><div class="hero-stat-label">زيادة المبيعات</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="landing-section services-bg" id="services">
+    <div class="section-header">
+      <div class="section-tag">خدماتنا</div>
+      <h2 class="section-title">كل ما <span>تحتاجه</span> لتنجح</h2>
+      <p class="section-sub">نقدم حلول تسويقية متكاملة مصممة خصيصاً للمشاريع الطنجاوية</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>تصميم لوغو احترافي</h3>
+        <p>هويتك التجارية هي أول ما يشوف الزبون — خلليها تعجبه ما تنساهش</p>
+        <ul class="service-features">
+          <li>تصميم احترافي بالكامل</li>
+          <li>ملفات جاهزة لكل استخدام</li>
+          <li>3 تعديلات مجانية</li>
+          <li>توصيل في 48 ساعة</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📱</div>
+        <h3>تسويق رقمي</h3>
+        <p>نبني استراتيجية تسويق شاملة تخلي براندك يطلع فوق وتزيد مبيعاتك</p>
+        <ul class="service-features">
+          <li>إدارة منصات التواصل</li>
+          <li>محتوى يجذب الزبناء</li>
+          <li>تقارير شهرية واضحة</li>
+          <li>استراتيجية نمو متكاملة</li>
+        </ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📣</div>
+        <h3>إعلانات ممولة</h3>
+        <p>Facebook & Instagram Ads — كنوصل لزبنائك الحقيقيين اللي باغيين خدمتك</p>
+        <ul class="service-features">
+          <li>استهداف دقيق للجمهور</li>
+          <li>إعلانات تبيع فعلياً</li>
+          <li>تتبع النتائج يومياً</li>
+          <li>ROI مضمون</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="landing-section why-bg" id="why">
+    <div class="section-header">
+      <div class="section-tag">لماذا نحن؟</div>
+      <h2 class="section-title">شنو <span>يميزنا</span>؟</h2>
+      <p class="section-sub">ما كنبيعوش وعود — كنقدمو نتائج حقيقية ومقيسة</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-card"><div class="why-icon">🏆</div><h3>خدمة احترافية</h3><p>كل مشروع كنعاملوه بجدية كاملة — من الفكرة حتى التنفيذ بنسبة 100%</p></div>
+      <div class="why-card"><div class="why-icon">📈</div><h3>نتائج حقيقية</h3><p>مش كلام فارغ — أرقام واضحة وتقارير شهرية تشوف فيها التقدم بعينيك</p></div>
+      <div class="why-card"><div class="why-icon">💬</div><h3>دعم مباشر</h3><p>مصطفى نفسه مستعد يجاوبك في أي وقت — مش روبو مش سكرتيرة</p></div>
+      <div class="why-card"><div class="why-icon">💡</div><h3>تجربة محلية</h3><p>كنفهمو السوق الطنجاوي وكنعرفو شنو يجذب الزبون المغربي</p></div>
+    </div>
+  </section>
+
+  <!-- OFFER -->
+  <section class="landing-section offer-bg" id="offer">
+    <div class="offer-inner">
+      <div class="offer-badge">🔥 عرض محدود</div>
+      <h2>استشارة مجانية لأول 5 مشاريع</h2>
+      <p>ما تضيعش الفرصة — جلسة استشارة مجانية 30 دقيقة نحللو فيها مشروعك ونعطيك خطة تسويق واضحة بلا مقابل</p>
+      <div class="offer-spots">
+        <span class="spot taken"></span>
+        <span class="spot taken"></span>
+        <span class="spot taken"></span>
+        <span class="spot"></span>
+        <span class="spot"></span>
+        <span class="offer-spots-label">3 من 5 أماكن أخذت — بقاو 2 فقط!</span>
+      </div>
+      <a href="https://wa.me/212673445002?text=السلام عليكم، بغيت نستافد من الاستشارة المجانية 🙏" target="_blank" class="btn-wa" style="font-size:1.05rem;padding:15px 36px;display:inline-flex;">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        احجز استشارتك الآن
+      </a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="landing-section contact-bg" id="contact">
+    <div class="contact-inner">
+      <div class="section-tag">التواصل</div>
+      <h2 class="section-title" style="margin-bottom:10px">تواصل مع <span>مصطفى</span></h2>
+      <p class="section-sub" style="margin:0 auto 40px">مصطفى سكوم — هنا يجاوبك مباشرة</p>
+      <div class="contact-info">
+        <div class="contact-card">
+          <div class="contact-card-icon">📞</div>
+          <div class="contact-card-info">
+            <small>رقم الهاتف</small>
+            <span>+212 673 445 002</span>
+          </div>
+        </div>
+        <a href="https://wa.me/212673445002" target="_blank" style="text-decoration:none">
+          <div class="contact-card" style="border-color:#25D366;cursor:pointer">
+            <div class="contact-card-icon" style="background:rgba(37,211,102,0.12)">
+              <svg style="width:24px;height:24px;fill:#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            </div>
+            <div class="contact-card-info">
+              <small>WhatsApp</small>
+              <span style="color:#25D366">ابدأ محادثة الآن</span>
+            </div>
+          </div>
+        </a>
+      </div>
+      <a href="https://wa.me/212673445002?text=السلام عليكم مصطفى، بغيت نعرف أكثر على خدمات Tangier Boost 🙏" target="_blank" class="btn-wa" style="font-size:1rem;padding:14px 32px;display:inline-flex;">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        راسلنا على WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <p>© 2025 <span>Tangier Boost System</span> — مصطفى سكوم | طنجة، المغرب</p>
+  </footer>
+
+</div><!-- end page-landing -->
+
+<!-- ════════════════════════════════════
+  PAGE 2 — CHAT (WhatsApp Simulator)
+════════════════════════════════════ -->
+<div id="page-chat" class="page">
+  <div class="chat-container">
+    <div class="chat-page-header">
+      <h1>محادثة <span>Tangier Boost</span></h1>
+      <p>محاكاة الرد التلقائي على WhatsApp</p>
+    </div>
+    <div class="phone">
+      <div class="wa-header">
+        <div class="wa-back" onclick="showPage('landing')">←</div>
+        <div class="wa-avatar">🚀</div>
+        <div class="wa-info">
+          <div class="wa-name">Tangier Boost</div>
+          <div class="wa-status">● متصل الآن</div>
+        </div>
+        <div class="wa-icons"><span>📹</span><span>📞</span><span>⋮</span></div>
+      </div>
+      <div class="wa-chat" id="chat">
+        <div class="date-divider">اليوم</div>
+      </div>
+      <div class="typing" id="typing">
+        <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+      </div>
+      <div class="quick-replies" id="quick-replies"></div>
+      <div class="wa-input-area">
+        <input type="text" class="wa-input" id="user-input" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMsg()">
+        <button class="wa-send" onclick="sendMsg()">➤</button>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetChat()">🔄 إعادة تشغيل المحادثة</button>
+  </div>
+</div><!-- end page-chat -->
+
+<!-- ════════════════════════════════════
+  PAGE 3 — CRM DASHBOARD
+════════════════════════════════════ -->
+<div id="page-crm" class="page">
+  <aside class="crm-sidebar" id="crm-sidebar">
+    <div class="crm-sidebar-logo">Tangier <span>Boost</span></div>
+    <nav class="crm-sidebar-nav">
+      <div class="crm-nav-item active" onclick="activateCrmNav(this)">
+        <span class="icon">👥</span> الزبناء
+      </div>
+      <div class="crm-nav-item" onclick="activateCrmNav(this)">
+        <span class="icon">📊</span> الإحصائيات
+      </div>
+      <div class="crm-nav-item" onclick="showPage('landing')">
+        <span class="icon">🌐</span> الصفحة الرئيسية
+      </div>
+      <div class="crm-nav-item" onclick="window.open('https://wa.me/212673445002','_blank')">
+        <span class="icon">💬</span> WhatsApp
+      </div>
+    </nav>
+    <div class="crm-sidebar-footer">
+      <div class="owner-info">
+        <div class="owner-avatar">م</div>
+        <div>
+          <div class="owner-name">مصطفى سكوم</div>
+          <div class="owner-role">المدير العام</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <main class="crm-main">
+    <div class="topbar">
+      <h1 class="page-title">لوحة إدارة الزبناء</h1>
+      <div class="topbar-actions">
+        <button class="btn btn-primary" onclick="openModal()">➕ إضافة زبون</button>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-label">مجموع الزبناء</div>
+        <div class="stat-card-value orange" id="stat-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">زبناء فعليون</div>
+        <div class="stat-card-value green" id="stat-clients">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">تفاوض</div>
+        <div class="stat-card-value yellow" id="stat-nego">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-label">مهتمون</div>
+        <div class="stat-card-value blue" id="stat-interested">0</div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <div class="table-header">
+        <h3>📋 قائمة الزبناء</h3>
+        <input type="text" class="search-input" id="search" placeholder="🔍 بحث عن زبون..." oninput="renderTable()">
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>#</th><th>الاسم</th><th>نوع المشروع</th><th>الحالة</th><th>الملاحظات</th><th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody id="clients-tbody"></tbody>
+      </table>
+      <div id="empty-state" class="empty-state" style="display:none">
+        <div class="empty-icon">📭</div>
+        <p>لا يوجد زبناء بعد — ابدأ بإضافة أول زبون!</p>
+      </div>
+    </div>
+  </main>
+</div><!-- end page-crm -->
+
+<!-- CRM MODAL -->
+<div class="modal-overlay" id="crm-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-title">➕ إضافة زبون جديد</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">الاسم الكامل *</label>
+      <input type="text" class="form-input" id="f-name" placeholder="مثلاً: أحمد بنعلي">
+    </div>
+    <div class="form-group">
+      <label class="form-label">نوع المشروع *</label>
+      <select class="form-select" id="f-type">
+        <option value="">اختر نوع المشروع...</option>
+        <option value="تصميم لوغو">🎨 تصميم لوغو</option>
+        <option value="تسويق رقمي">📱 تسويق رقمي</option>
+        <option value="إعلانات ممولة">📣 إعلانات ممولة</option>
+        <option value="باقة كاملة">💼 باقة كاملة</option>
+        <option value="أخرى">📌 أخرى</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">الحالة *</label>
+      <select class="form-select" id="f-status">
+        <option value="مهتم">🔵 مهتم</option>
+        <option value="تفاوض">🟡 تفاوض</option>
+        <option value="زبون">🟢 زبون</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">الملاحظات</label>
+      <textarea class="form-textarea" id="f-notes" placeholder="أي ملاحظات إضافية على هذا الزبون..."></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal()">إلغاء</button>
+      <button class="btn btn-primary" id="save-btn" onclick="saveClient()">💾 حفظ</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"><span class="toast-icon">✅</span><span id="toast-msg">تم الحفظ بنجاح</span></div>
+
+<!-- FLOATING WA (landing + chat only) -->
+<a href="https://wa.me/212673445002" target="_blank" class="float-wa" id="float-wa" title="تواصل معنا على WhatsApp">
+  <div class="float-wa-pulse"></div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<!-- ════════════════════════════════════
+  JAVASCRIPT — All pages
+════════════════════════════════════ -->
+<script>
+/* ── PAGE SWITCHER ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+
+  const nav = document.getElementById('main-nav');
+  const floatWa = document.getElementById('float-wa');
+
+  if (name === 'crm') {
+    nav.style.display = 'none';
+    floatWa.style.display = 'none';
+    renderTable();
+  } else {
+    nav.style.display = 'flex';
+    floatWa.style.display = 'flex';
+  }
+
+  if (name === 'chat') {
+    // init chat if empty
+    const chatEl = document.getElementById('chat');
+    if (chatEl.children.length <= 1) {
+      setTimeout(() => {
+        const first = chatFlow[0];
+        botReply(first.bot, first.chips, first.next);
+      }, 600);
+    }
+  }
+
+  window.scrollTo(0, 0);
+}
+
+/* ── CHAT LOGIC ── */
+const chatFlow = [
+  { id:'welcome', bot:'مرحبا بك مع Tangier Boost 👋 كيفاش نقدر نعاونك؟',
+    chips:['بغيت تصميم لوغو 🎨','بغيت تسويق رقمي 📱','بغيت إعلانات 📣','عندي سؤال ❓'], next:'project' },
+  { id:'project', bot:'واعر الاختيار! 🔥 شنو المشروع ديالك؟ علاش تعطيني شي تفاصيل أكثر باش نعاونك مزيان 💪',
+    chips:['محل تجاري 🏪','مطعم / كافيه ☕','أونلاين شوب 🛒','خدمة متنوعة 🎯'], next:'page' },
+  { id:'page', bot:'مزيان! 😊 واش عندك صفحة ديال الفيسبوك أو الإنستغرام؟',
+    chips:['إيه عندي صفحة ✅','لا حتى صفحة ما عندي ❌','عندي صفحة بسيطة 😅'], next:'goal' },
+  { id:'goal', bot:'زين! 💡 شنو الهدف ديالك من التسويق؟',
+    chips:['نزيد مبيعاتي 💰','نزيد متابعيني 👥','نبني براند قوي 🏆','الكل 🚀'], next:'offer' },
+  { id:'offer', bot:'ممتاز! 🎉 فهمت مزيان المشروع ديالك.\n\nعندنا عرض خاص ليك: استشارة مجانية 30 دقيقة مع مصطفى نخططو فيها كل شي! 🔥\n\nتقدر تتواصل مباشرة أو تكمل هنا 👇',
+    chips:['ابدأ الاستشارة المجانية 🎁','شوف الأسعار 💵','خلال قليل ⏰'], next:'close' },
+  { id:'close', bot:'شكراً بزاف على ثقتك! 🙏\n\nمصطفى غادي يتواصل معك فأقرب وقت ممكن.\n\n📞 +212 673 445 002\n\nنتمنالك التوفيق فمشروعك! 🚀⭐',
+    chips:['واصل التحدث 💬','شكراً 🙏'], next:null }
+];
+
+let chatStep = 0;
+function getTime() {
+  return new Date().toLocaleTimeString('ar',{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function addMsg(text, type) {
+  const chatEl = document.getElementById('chat');
+  const div = document.createElement('div');
+  div.className = 'msg msg-' + type;
+  div.innerHTML = text.replace(/\n/g,'<br>') + `<div class="msg-time">${getTime()}</div>`;
+  chatEl.appendChild(div);
+  chatEl.scrollTop = chatEl.scrollHeight;
+}
+function setChips(chips, onSelect) {
+  const qrEl = document.getElementById('quick-replies');
+  qrEl.innerHTML = '';
+  chips.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'chip'; btn.textContent = c;
+    btn.onclick = () => onSelect(c);
+    qrEl.appendChild(btn);
+  });
+}
+function showTyping() {
+  const t = document.getElementById('typing');
+  t.classList.add('show');
+  document.getElementById('chat').scrollTop = document.getElementById('chat').scrollHeight;
+}
+function hideTyping() { document.getElementById('typing').classList.remove('show'); }
+function botReply(text, chips, nextId) {
+  showTyping();
+  setTimeout(() => {
+    hideTyping(); addMsg(text,'recv');
+    if (chips && chips.length) {
+      setChips(chips, (selected) => {
+        addMsg(selected, 'sent');
+        document.getElementById('quick-replies').innerHTML = '';
+        const next = chatFlow.find(f => f.id === nextId);
+        if (next) botReply(next.bot, next.chips, next.next);
+      });
+    } else {
+      document.getElementById('quick-replies').innerHTML = '';
+    }
+  }, 900 + text.length * 12);
+}
+function sendMsg() {
+  const input = document.getElementById('user-input');
+  const text = input.value.trim();
+  if (!text) return;
+  addMsg(text,'sent'); input.value = '';
+  document.getElementById('quick-replies').innerHTML = '';
+  chatStep = Math.min(chatStep + 1, chatFlow.length - 1);
+  const next = chatFlow[chatStep];
+  if (next) botReply(next.bot, next.chips, next.next);
+}
+function resetChat() {
+  chatStep = 0;
+  document.getElementById('chat').innerHTML = '<div class="date-divider">اليوم</div>';
+  document.getElementById('quick-replies').innerHTML = '';
+  hideTyping();
+  setTimeout(() => botReply(chatFlow[0].bot, chatFlow[0].chips, chatFlow[0].next), 500);
+}
+
+/* ── CRM LOGIC ── */
+let clients = JSON.parse(localStorage.getItem('tbs_clients') || '[]');
+let editId = null;
+
+function saveClients() { localStorage.setItem('tbs_clients', JSON.stringify(clients)); }
+
+function statusBadge(s) {
+  if (s==='زبون') return `<span class="badge badge-green">زبون</span>`;
+  if (s==='تفاوض') return `<span class="badge badge-yellow">تفاوض</span>`;
+  return `<span class="badge badge-blue">مهتم</span>`;
+}
+
+function renderTable() {
+  const q = (document.getElementById('search')?.value || '').toLowerCase();
+  const tbody = document.getElementById('clients-tbody');
+  const filtered = clients.filter(c =>
+    c.name.toLowerCase().includes(q) ||
+    (c.type||'').toLowerCase().includes(q) ||
+    c.status.toLowerCase().includes(q)
+  );
+  if (filtered.length === 0) {
+    tbody.innerHTML = '';
+    document.getElementById('empty-state').style.display = 'block';
+  } else {
+    document.getElementById('empty-state').style.display = 'none';
+    tbody.innerHTML = filtered.map((c,i) => `
+      <tr>
+        <td style="color:var(--gray);font-size:0.8rem">${i+1}</td>
+        <td><strong>${c.name}</strong></td>
+        <td><span style="color:var(--orange-light)">${c.type||'—'}</span></td>
+        <td>${statusBadge(c.status)}</td>
+        <td style="color:var(--gray);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${c.notes||'—'}</td>
+        <td>
+          <div class="action-btns">
+            <button class="btn btn-ghost btn-sm" onclick="editClient(${c.id})">✏️</button>
+            <button class="btn btn-danger btn-sm" onclick="deleteClient(${c.id})">🗑️</button>
+            <a href="https://wa.me/212673445002?text=مرحباً بزبوننا ${encodeURIComponent(c.name)}" target="_blank" class="btn btn-sm" style="background:rgba(37,211,102,0.12);color:#25D366;text-decoration:none;display:inline-flex;align-items:center;">💬</a>
+          </div>
+        </td>
+      </tr>
+    `).join('');
+  }
+  document.getElementById('stat-total').textContent = clients.length;
+  document.getElementById('stat-clients').textContent = clients.filter(c=>c.status==='زبون').length;
+  document.getElementById('stat-nego').textContent = clients.filter(c=>c.status==='تفاوض').length;
+  document.getElementById('stat-interested').textContent = clients.filter(c=>c.status==='مهتم').length;
+}
+
+function openModal(id = null) {
+  editId = id;
+  if (id) {
+    const c = clients.find(c=>c.id===id);
+    document.getElementById('modal-title').textContent = '✏️ تعديل بيانات الزبون';
+    document.getElementById('f-name').value = c.name;
+    document.getElementById('f-type').value = c.type;
+    document.getElementById('f-status').value = c.status;
+    document.getElementById('f-notes').value = c.notes;
+    document.getElementById('save-btn').textContent = '💾 تحديث';
+  } else {
+    document.getElementById('modal-title').textContent = '➕ إضافة زبون جديد';
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-type').value = '';
+    document.getElementById('f-status').value = 'مهتم';
+    document.getElementById('f-notes').value = '';
+    document.getElementById('save-btn').textContent = '💾 حفظ';
+  }
+  document.getElementById('crm-modal').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('crm-modal').classList.remove('open');
+  editId = null;
+}
+function saveClient() {
+  const name = document.getElementById('f-name').value.trim();
+  const type = document.getElementById('f-type').value;
+  const status = document.getElementById('f-status').value;
+  const notes = document.getElementById('f-notes').value.trim();
+  if (!name || !type) { showToast('⚠️ الرجاء تعبئة الاسم ونوع المشروع'); return; }
+  if (editId) {
+    const idx = clients.findIndex(c=>c.id===editId);
+    clients[idx] = { ...clients[idx], name, type, status, notes };
+    showToast('✅ تم تحديث بيانات الزبون');
+  } else {
+    clients.push({ id: Date.now(), name, type, status, notes, createdAt: new Date().toLocaleDateString('ar-MA') });
+    showToast('✅ تم إضافة الزبون بنجاح');
+  }
+  saveClients(); renderTable(); closeModal();
+}
+function editClient(id) { openModal(id); }
+function deleteClient(id) {
+  if (!confirm('واش متأكد بغيت تمسح هذا الزبون؟')) return;
+  clients = clients.filter(c=>c.id!==id);
+  saveClients(); renderTable();
+  showToast('🗑️ تم حذف الزبون');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toast-msg').textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 3000);
+}
+function activateCrmNav(el) {
+  document.querySelectorAll('.crm-nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+}
+document.getElementById('crm-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+/* ── INIT ── */
+if (clients.length === 0) {
+  clients = [
+    { id:1, name:'أحمد بنالي', type:'تصميم لوغو', status:'زبون', notes:'يريد لوغو لمطعمه', createdAt:'01/04/2025' },
+    { id:2, name:'فاطمة الزهراء', type:'إعلانات ممولة', status:'تفاوض', notes:'بغات إعلانات إنستغرام', createdAt:'05/04/2025' },
+    { id:3, name:'كريم السعدي', type:'تسويق رقمي', status:'مهتم', notes:'سأل على الأسعار', createdAt:'10/04/2025' },
+  ];
+  saveClients();
+}
+</script>
+</body>
+</html>
